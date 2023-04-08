@@ -3,65 +3,63 @@
 namespace Node;
 class Program
 {
-    private class Node
-    {
-        public int Data;
-        public Node Next;
-        public Node(int data = 0)
-        {
-            Data = data;
-        }
-    }
 
     public class ListNode
     {
-        Node head;
-        Node tail;
-        int count = 0;
-
-        public bool IsExist(object obj)
+        private class Node
         {
-            return obj != null;
+            public int Data;
+            public Node Next;
+            //свойства С#
         }
+        //индексер
+        private Node _tail;
+        private int _count;
+        //throw exception
         private void Message()
         {
-            Console.WriteLine("список не существует!");
+            Console.WriteLine("список не существует");
         }
 
         public void Add(int data)
         {
-            Node node = new Node(data);
-            if (!IsExist(tail))
+            var temp = _tail;
+            Node node = new Node() { Data = data };
+            if (_tail == null)
             {
-                tail = node;
+                _tail = node;
             }
             else
             {
-                head.Next = node;
-            }
-            head = node;
-            count++;
+                while (temp.Next != null)
+                {
+                    temp = temp.Next;
+                }
+                temp.Next = node;
+            }            
+            _count++;
         }
+
         public bool Remove(int data)
         {
-            var temp = tail;
+            var temp = _tail;
             Node previous = null;
-            if (IsExist(tail))
+            if (_tail != null)
             {
                 while (temp != null)
                 {
-                    if (temp.Data == data)
+                    if (temp.Data.Equals(data))
                     {
-                        if (IsExist(previous))
+                        if (previous != null)
                         {
                             previous.Next = temp.Next;
-                            count--;
+                            _count--;
                             return true;
                         }
                         else
                         {
-                            count--;
-                            tail = tail.Next;
+                            _count--;
+                            _tail = _tail.Next;
                             return true;
                         }
                     }
@@ -76,12 +74,13 @@ class Program
             }
             return false;
         }
+        
         public void Print()
         {
-            if (IsExist(tail))
+            if (_tail != null)
             {
-                var temp = tail;
-                while (IsExist(temp))
+                var temp = _tail;
+                while (temp != null)
                 {
                     Console.WriteLine(temp.Data);
                     temp = temp.Next;
@@ -92,22 +91,23 @@ class Program
                 Message();
             }
         }
-        public void Length()
+        
+        public int Length()
         {
-            if (IsExist(tail))
+            if (_tail != null)
             {
-                Console.WriteLine(count);
+                return _count;
             }
             else
             {
-                Message();
+                return 0;
             }
         }
         public void Clear()
         {
-            if (IsExist(tail))
+            if (_tail != null)
             {
-                tail = null;
+                _tail = null;
             }
             else
             {
@@ -120,12 +120,11 @@ class Program
     {
         ListNode list = new ListNode();
         list.Add(1);
-        list.Length();
-        //Console.WriteLine();
+        list.Add(2);
+        list.Add(3);
+        list.Add(4);
         list.Remove(1);
         list.Print();
-        //Console.WriteLine();
-        //list.Clear();
-        //list.Length();
+        Console.WriteLine(list.Length());
     }
 }
