@@ -44,18 +44,26 @@ class Program
         }
         public bool Remove(int data)
         {
-            bool result = false;
             var temp = tail;
-            var previous = tail;
+            Node previous = null;
             if (IsExist(tail))
             {
-                while (IsExist(temp))
+                while (temp != null)
                 {
                     if (temp.Data == data)
                     {
-                        previous = temp.Next;                        
-                        count--;
-                        return true;
+                        if (IsExist(previous))
+                        {
+                            previous.Next = temp.Next;
+                            count--;
+                            return true;
+                        }
+                        else
+                        {
+                            count--;
+                            tail = tail.Next;
+                            return true;
+                        }
                     }
                     previous = temp;
                     temp = temp.Next;
@@ -64,8 +72,9 @@ class Program
             else
             {
                 Message();
+                return false;
             }
-            return result;
+            return false;
         }
         public void Print()
         {
@@ -111,12 +120,9 @@ class Program
     {
         ListNode list = new ListNode();
         list.Add(1);
-        list.Add(2);
-        list.Add(3);
-        list.Add(4);
         list.Length();
         //Console.WriteLine();
-        list.Remove(2);
+        list.Remove(1);
         list.Print();
         //Console.WriteLine();
         //list.Clear();
