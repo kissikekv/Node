@@ -18,7 +18,7 @@ class Program
         {
             get
             {
-                var temp = _tail;
+                var temp = _tail; // вынеси в отедельный метод
                 int couter = 0;
                 while (couter < index)
                 {
@@ -56,7 +56,7 @@ class Program
             {
                 _tail = node;
             }
-            else
+            else // не нужен, сделай без елс
             {
                 while (temp.Next != null)
                 {
@@ -86,7 +86,7 @@ class Program
                         else
                         {
                             _count--;
-                            _tail = _tail.Next;
+                            _tail = _tail.Next; // temp
                             return true;
                         }
                     }
@@ -96,7 +96,7 @@ class Program
             }
             else
             {
-                Message();
+                Message(); //  не надо ошибок тут
                 return false;
             }
             return false;
@@ -115,7 +115,7 @@ class Program
             }
             else
             {
-                Message();
+                Message(); // не надо ошибок, пиши сразу правильно
             }
         }
 
@@ -125,7 +125,7 @@ class Program
             {
                 if (_tail != null)
                 {
-                    return _count;
+                    return _count; //  в свойство гет и приват сет
                 }
                 else
                 {
@@ -137,7 +137,7 @@ class Program
         {
             if (_tail != null)
             {
-                _tail = null;
+                _tail = null; //  сразу в налл
             }
             else
             {
