@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace Node;
 class Program
@@ -13,6 +14,32 @@ class Program
             //свойства С#
         }
         //индексер
+        public int this[int index]
+        {
+            get
+            {
+                var temp = _tail;
+                int couter = 0;
+                while (couter < index)
+                {
+                    temp = temp.Next;
+                    couter++;
+                }
+                return temp.Data;
+            }
+            set
+            {
+                var temp = _tail;
+                int couter = 0;
+                while (couter < index)
+                {
+                    temp = temp.Next;
+                    couter++;
+                }
+                temp.Data = value;                
+            }
+        }
+
         private Node _tail;
         private int _count;
         //throw exception
@@ -36,7 +63,7 @@ class Program
                     temp = temp.Next;
                 }
                 temp.Next = node;
-            }            
+            }
             _count++;
         }
 
@@ -74,7 +101,7 @@ class Program
             }
             return false;
         }
-        
+
         public void Print()
         {
             if (_tail != null)
@@ -91,16 +118,19 @@ class Program
                 Message();
             }
         }
-        
-        public int Length()
+
+        public int Length
         {
-            if (_tail != null)
+            get
             {
-                return _count;
-            }
-            else
-            {
-                return 0;
+                if (_tail != null)
+                {
+                    return _count;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
         public void Clear()
@@ -123,8 +153,12 @@ class Program
         list.Add(2);
         list.Add(3);
         list.Add(4);
-        list.Remove(1);
+        //list.Remove(1);
         list.Print();
-        Console.WriteLine(list.Length());
+        //Console.WriteLine(list.Length);
+        Console.WriteLine(list[0]);
+        list[3] = 1;
+        Console.WriteLine("blyaaaaaaaaaaa");
+        list.Print();
     }
 }
