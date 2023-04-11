@@ -8,142 +8,114 @@ class Program
     public class ListNode
     {
         private class Node
-        {
-            public int Data;
-            public Node Next;
-            //свойства С#
-        }
-        //индексер
-        public int this[int index]
-        {
-            get
             {
-                var temp = _tail; // вынеси в отедельный метод
-                int couter = 0;
-                while (couter < index)
-                {
-                    temp = temp.Next;
-                    couter++;
-                }
-                return temp.Data;
+                public int Data {get; set;}
+                public Node Next {get; set;}
             }
-            set
+
+            private Node _tail;
+            public int _count;            
+
+            private Node GetIndex(int index)
             {
                 var temp = _tail;
-                int couter = 0;
-                while (couter < index)
+                int counter = 0;
+                while (counter < index)
                 {
-                    temp = temp.Next;
-                    couter++;
+                    temp = temp.Next;                                       
+                    counter++;
                 }
-                temp.Data = value;                
+                return temp;
             }
-        }
 
-        private Node _tail;
-        private int _count;
-        //throw exception
-        private void Message()
-        {
-            Console.WriteLine("список не существует");
-        }
-
-        public void Add(int data)
-        {
-            var temp = _tail;
-            Node node = new Node() { Data = data };
-            if (_tail == null)
+            public int this[int index]
             {
-                _tail = node;
+                get
+                {
+                    return GetIndex(index).Data;
+                }
+                set
+                {
+                    GetIndex(index).Data = value;
+                }
             }
-            else // не нужен, сделай без елс
+            
+            public void Add(int data)
             {
+                Count++;
+                var temp = _tail;
+                Node node = new Node() { Data = data };
+                if (temp == null)
+                {
+                    _tail = node;
+                    return;
+                }
                 while (temp.Next != null)
                 {
                     temp = temp.Next;
                 }
                 temp.Next = node;
             }
-            _count++;
-        }
 
-        public bool Remove(int data)
-        {
-            var temp = _tail;
-            Node previous = null;
-            if (_tail != null)
-            {
-                while (temp != null)
-                {
-                    if (temp.Data.Equals(data))
-                    {
-                        if (previous != null)
-                        {
-                            previous.Next = temp.Next;
-                            _count--;
-                            return true;
-                        }
-                        else
-                        {
-                            _count--;
-                            _tail = _tail.Next; // temp
-                            return true;
-                        }
-                    }
-                    previous = temp;
-                    temp = temp.Next;
-                }
-            }
-            else
-            {
-                Message(); //  не надо ошибок тут
-                return false;
-            }
-            return false;
-        }
-
-        public void Print()
-        {
-            if (_tail != null)
+            public bool Remove(int data)
             {
                 var temp = _tail;
-                while (temp != null)
+                if (_tail != null)
                 {
-                    Console.WriteLine(temp.Data);
-                    temp = temp.Next;
+                    Node previous = null;                    
+                    while (temp != null)
+                    {
+                        if (temp.Data.Equals(data))
+                        {
+                            if (previous != null)
+                            {
+                                previous.Next = temp.Next;
+                                Count--;
+                                return true;
+                            }
+                            else
+                            {
+                                Count--;
+                                _tail = _tail.Next; // temp
+                                return true;
+                            }
+                        }
+                        previous = temp;
+                        temp = temp.Next;
+                    }
                 }
+                return false;
             }
-            else
-            {
-                Message(); // не надо ошибок, пиши сразу правильно
-            }
-        }
 
-        public int Length
-        {
-            get
+            public void Print()
             {
                 if (_tail != null)
                 {
-                    return _count; //  в свойство гет и приват сет
+                    var temp = _tail;
+                    while (temp != null)
+                    {
+                        Console.WriteLine(temp.Data);
+                        temp = temp.Next;
+                    }
                 }
-                else
+            }
+
+            public int Count
+            {
+                get
                 {
-                    return 0;
+                    return _count;
+                }
+                private set
+                {
+                    _count = value;
                 }
             }
-        }
-        public void Clear()
-        {
-            if (_tail != null)
+
+            public void Clear()
             {
-                _tail = null; //  сразу в налл
+                _tail = null;
             }
-            else
-            {
-                Message();
-            }
-        }
     }
 
     public static void Main(string[] args)
